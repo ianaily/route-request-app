@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
-import L, { LatLngExpression } from 'leaflet';
+import L from 'leaflet';
 import 'leaflet-routing-machine';
 
 import RoutingMachine from 'src/components/routing-machine/routing-machine.component';

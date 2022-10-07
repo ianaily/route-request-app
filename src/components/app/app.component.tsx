@@ -10,9 +10,7 @@ export default function App() {
         <div className="App">
             <ResizableContainer
                 left={<RoutesTableContainer/>}
-                right={
-                    <MapContainer/>
-                }
+                right={<MapContainer/>}
             />
         </div>
     );
