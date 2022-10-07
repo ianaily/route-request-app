@@ -1,0 +1,8 @@
+﻿.leaflet-container {
+    width: 100%;
+    height: 100vh;
+}
+
+.leaflet-routing-container {
+    display: none;
+}

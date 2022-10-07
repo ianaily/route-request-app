@@ -1,0 +1,16 @@
+.ant-table-content {
+    display: block;
+    overflow: auto;
+}
+
+.ant-table-cell {
+    white-space: nowrap;
+}
+
+.ant-table-row {
+    cursor: pointer;
+}
+
+.selected-row {
+    background-color: #eee;
+}
