@@ -20,7 +20,17 @@ export const updateRouteRequestAction = (payload: RouteRequest) => ({
     payload,
 });
 
-export const setCurrentRouteAction = (payload: RouteRequest) => ({
+export const updateRouteRequestSuccessAction = (payload: RouteRequest[]) => ({
+    type: ActionType.UPDATE_ROUTE_SUCCESS_REQUEST,
+    payload,
+});
+
+export const updateRouteRequestFailureAction = (payload: RouteRequest) => ({
+    type: ActionType.UPDATE_ROUTE_FAILURE_REQUEST,
+    payload,
+});
+
+export const setCurrentRouteAction = (payload: RouteRequest | null) => ({
     type: ActionType.SET_CURRENT_ROUTE,
     payload,
 });

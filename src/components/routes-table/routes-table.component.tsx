@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Select, Table } from 'antd';
+import { Table } from 'antd';
 import { LatLngExpression } from 'leaflet';
 
 import { RouteRequest } from 'src/domains/route-request.interface';
+import PointSelect from 'src/components/point-select/point-select.component';
 import {
     getRoutesRequestAction,
     setCurrentRouteAction,
@@ -11,8 +12,6 @@ import {
 } from 'src/store/store.actions';
 import { RoutesRequestState } from 'src/store/store.types';
 import './routes-table.style.css';
-
-const {Option} = Select;
 
 export default function RoutesTable({routes, points}: RoutesRequestState) {
     const [currentRoute, setCurrentRoute] = useState<RouteRequest | null>(null);
@@ -22,27 +21,19 @@ export default function RoutesTable({routes, points}: RoutesRequestState) {
         dispatch(getRoutesRequestAction());
     }, []);
 
-    const onSelectLoadingPointChange = (route: RouteRequest, stringedPoint: string) => {
-        const newPoint = stringedPoint
-            .split(',')
-            .map(coordinate => +coordinate);
+    const onSelectLoadingPointChange = (route: RouteRequest, newPoint: LatLngExpression) => {
         const newRoute = {...route};
 
-        newRoute.loadingPoint = newPoint as LatLngExpression;
+        newRoute.loadingPoint = newPoint;
         dispatch(updateRouteRequestAction(newRoute));
     }
-    const onSelectUnloadingPointChange = (route: RouteRequest, stringedPoint: string) => {
-        const newPoint = stringedPoint
-            .split(',')
-            .map(coordinate => +coordinate);
+    const onSelectUnloadingPointChange = (route: RouteRequest, newPoint: LatLngExpression) => {
         const newRoute = {...route};
 
-        newRoute.unloadingPoint = newPoint as LatLngExpression;
+        newRoute.unloadingPoint = newPoint;
         dispatch(updateRouteRequestAction(newRoute));
     }
-    const renderPointsOptions = () => points.map((point: LatLngExpression, index: number) =>
-        <Option key={index} value={point.toString()}>{point.toString()}</Option>
-    );
+
     const columns = [
         {
             title: 'Name',
@@ -53,27 +44,23 @@ export default function RoutesTable({routes, points}: RoutesRequestState) {
             dataIndex: 'loadingPoint',
             key: 'loadingPoint',
             render: (point: LatLngExpression, route: RouteRequest) =>
-                <Select defaultValue={point.toString()}
-                        style={{minWidth: 108}}
-                        onChange={(value: string) => onSelectLoadingPointChange(route, value)}>
-                    {renderPointsOptions()}
-                </Select>
+                <PointSelect point={point}
+                             points={points}
+                             onChange={(newPoint) => onSelectLoadingPointChange(route, newPoint)} />
         }, {
             title: 'Unloading point',
             dataIndex: 'unloadingPoint',
             key: 'unloadingPoint',
             render: (point: LatLngExpression, route: RouteRequest) =>
-                <Select defaultValue={point.toString()}
-                        style={{minWidth: 108}}
-                        onChange={(value: string) => onSelectUnloadingPointChange(route, value)}>
-                    {renderPointsOptions()}
-                </Select>
+                <PointSelect point={point}
+                             points={points}
+                             onChange={(newPoint) => onSelectUnloadingPointChange(route, newPoint)} />
         },
     ];
 
     const onRowClick = (record: RouteRequest) => {
         return {
-            onClick() {
+            'onClick'() {
                 setCurrentRoute(record);
                 dispatch(setCurrentRouteAction(record));
             }

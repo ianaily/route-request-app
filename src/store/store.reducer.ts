@@ -1,5 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit';
 
+import { RouteRequest } from 'src/domains/route-request.interface';
 import { ActionType, RoutesRequestState } from './store.types';
 
 const initialState: RoutesRequestState = {
@@ -19,25 +20,38 @@ export default function (state = initialState, action: AnyAction) {
         }
         case ActionType.GET_ROUTES_REQUEST_FAILURE: {
             return {
+                ...state,
                 routes: [],
                 points: [],
                 currentRoute: null,
             };
         }
-        case ActionType.SET_CURRENT_ROUTE: {
-            return {
-                ...state,
-                currentRoute: action.payload,
-            };
-        }
         case ActionType.UPDATE_ROUTE_REQUEST: {
             return {
                 ...state,
-                routes: state.routes.map((route) => (
-                    route.id === action.payload.id
-                        ? action.payload
-                        : route
-                )),
+                newRoute: action.payload,
+            };
+        }
+        case ActionType.UPDATE_ROUTE_SUCCESS_REQUEST: {
+            return {
+                ...state,
+                routes: action.payload,
+            };
+        }
+        case ActionType.UPDATE_ROUTE_FAILURE_REQUEST: {
+            return {
+                ...state,
+                routes: [],
+            };
+        }
+        case ActionType.SET_CURRENT_ROUTE: {
+            const {routes} = state;
+            const currentRoute = routes
+                .find((route: RouteRequest) => route.id === action.payload.id) || null;
+
+            return {
+                ...state,
+                currentRoute,
             };
         }
         default: {
