@@ -4,13 +4,13 @@ import { Table } from 'antd';
 import { LatLngExpression } from 'leaflet';
 
 import { RouteRequest } from 'src/domains/route-request.interface';
-import PointSelect from 'src/components/point-select/point-select.component';
 import {
   getRoutesRequestAction,
   setCurrentRouteAction,
   updateRouteRequestAction
 } from 'src/store/store.actions';
 import { RoutesRequestState } from 'src/store/store.types';
+import PointSelect from './point-select/point-select.component';
 import './routes-table.style.css';
 
 export default function RoutesTable({routes, points}: RoutesRequestState) {
@@ -58,18 +58,20 @@ export default function RoutesTable({routes, points}: RoutesRequestState) {
     },
   ];
 
-  const onRowClick = (record: RouteRequest) => {
-    return {
-      'onClick'() {
-        setCurrentRoute(record);
-        dispatch(setCurrentRouteAction(record));
-      }
-    };
-  };
+  const onRowClick = (record: RouteRequest) => ({
+    'onClick'() {
+      setCurrentRoute(record);
+      dispatch(setCurrentRouteAction(record));
+    }
+  });
+
+  const selectedRowClass = (record: RouteRequest) => (
+    currentRoute?.id === record.id ? 'selected-row' : ''
+  );
 
   return <Table dataSource={routes}
                 columns={columns}
                 rowKey="id"
-                rowClassName={(record) => currentRoute?.id === record.id ? 'selected-row' : ''}
+                rowClassName={selectedRowClass}
                 onRow={onRowClick}/>
 };

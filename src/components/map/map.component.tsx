@@ -4,7 +4,7 @@ import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet-routing-machine';
 
-import RoutingMachine from 'src/components/routing-machine/routing-machine.component';
+import RoutingMachine from './routing-machine/routing-machine.component';
 import { MapProps } from './map.types';
 import './map.style.css';
 
