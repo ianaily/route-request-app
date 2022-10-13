@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
+import useMouseMoveEvent from 'src/hooks/use-mouse-move-event.hook';
+import './resizable-container.style.css';
 
 type ResizableContainerProps = {
   left: JSX.Element;
@@ -40,15 +43,8 @@ export default function ResizableContainer({
     }
   };
 
-  useEffect(() => {
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
+  useMouseMoveEvent({onMouseMove, onMouseUp});
 
-    return () => {
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-    };
-  });
   const leftWidthPercent = width.toFixed(2);
   const rightWidthPercent = (100 - width).toFixed(2);
 
@@ -56,16 +52,8 @@ export default function ResizableContainer({
     <>
       <div style={{width: `${leftWidthPercent}vw`}}>
         <div
-          style={{
-            position: 'absolute',
-            width: '5px',
-            top: 0,
-            left: `${width}vw`,
-            bottom: 0,
-            zIndex: 500,
-            cursor: 'ew-resize',
-            backgroundColor: '#fdfcff'
-          }}
+          className="splitter"
+          style={{left: `${width}vw`}}
           onMouseDown={onMouseDown}
         />
         {left}

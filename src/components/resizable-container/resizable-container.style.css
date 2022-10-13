@@ -1,0 +1,9 @@
+.splitter {
+  position: absolute;
+  width: 5px;
+  top: 0;
+  bottom: 0;
+  z-index: 500;
+  cursor: ew-resize;
+  background-color: #fdfcff;
+}
