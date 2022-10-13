@@ -1,9 +1,28 @@
 .splitter {
   position: absolute;
-  width: 5px;
+  width: 8px;
   top: 0;
   bottom: 0;
-  z-index: 500;
-  cursor: ew-resize;
+  padding: 1px;
   background-color: #fdfcff;
+  cursor: ew-resize;
+  z-index: 500;
+}
+
+.splitter:hover {
+  background-color: #faf9fb;
+}
+
+.splitter::after {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 2px);
+  margin: 0;
+  content: "||";
+  color: darkgray;
+}
+
+.splitter:hover::after {
+  color: gray;
 }
