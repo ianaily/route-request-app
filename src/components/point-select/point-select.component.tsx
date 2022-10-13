@@ -11,34 +11,34 @@ const {Option} = Select;
 type OnChangePointSelect = (point: LatLngExpression) => void;
 
 export type PointSelectProps = {
-    point: LatLngExpression;
-    onChange: OnChangePointSelect;
+  point: LatLngExpression;
+  onChange: OnChangePointSelect;
 } & PointsState;
 
 export default function PointSelect({point, points, onChange}: PointSelectProps) {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getPointsAction());
-    }, []);
+  useEffect(() => {
+    dispatch(getPointsAction());
+  }, []);
 
-    const onSelectChange = (stringedPoint: string) => {
-        const newPoint = stringedPoint
-            .split(',')
-            .map(coordinate => +coordinate) as LatLngExpression;
+  const onSelectChange = (stringedPoint: string) => {
+    const newPoint = stringedPoint
+      .split(',')
+      .map(coordinate => +coordinate) as LatLngExpression;
 
-        onChange(newPoint);
-    }
+    onChange(newPoint);
+  }
 
-    return (
-        <Select defaultValue={point.toString()}
-                onChange={onSelectChange}
-                style={{minWidth: 108}}>
-            {
-                points.map((point: LatLngExpression, index: number) =>
-                    <Option key={index} value={point.toString()}>{point.toString()}</Option>
-                )
-            }
-        </Select>
-    );
+  return (
+    <Select defaultValue={point.toString()}
+            onChange={onSelectChange}
+            style={{minWidth: 108}}>
+      {
+        points.map((point: LatLngExpression, index: number) =>
+          <Option key={index} value={point.toString()}>{point.toString()}</Option>
+        )
+      }
+    </Select>
+  );
 }

@@ -1,16 +1,16 @@
 .ant-table-content {
-    display: block;
-    overflow: auto;
+  display: block;
+  overflow: auto;
 }
 
 .ant-table-cell {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .ant-table-row {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .selected-row {
-    background-color: #eee;
+  background-color: #eee;
 }

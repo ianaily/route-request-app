@@ -6,12 +6,12 @@ import ResizableContainer from 'src/components/resizable-container/resizable-con
 import './app.style.css';
 
 export default function App() {
-    return (
-        <div className="App">
-            <ResizableContainer
-                left={<RoutesTableContainer/>}
-                right={<MapContainer/>}
-            />
-        </div>
-    );
+  return (
+    <div className="App">
+      <ResizableContainer
+        left={<RoutesTableContainer/>}
+        right={<MapContainer/>}
+      />
+    </div>
+  );
 }
