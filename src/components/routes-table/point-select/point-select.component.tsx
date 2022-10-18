@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Select } from 'antd';
 import { LatLngExpression } from 'leaflet';
@@ -22,13 +22,13 @@ export default function PointSelect({point, points, onChange}: PointSelectProps)
     dispatch(getPointsAction());
   }, []);
 
-  const onSelectChange = (stringedPoint: string) => {
+  const onSelectChange = useCallback((stringedPoint: string) => {
     const newPoint = stringedPoint
       .split(',')
       .map(coordinate => +coordinate) as LatLngExpression;
 
     onChange(newPoint);
-  }
+  }, []);
 
   return (
     <Select defaultValue={point.toString()}

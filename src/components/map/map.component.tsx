@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 import L from 'leaflet';
@@ -13,17 +13,17 @@ export default function Map({
                               unloadingPoint,
                               defaultPosition,
                             }: MapProps) {
-  const loadingIcon = L.icon({
+  const [loadingIcon] = useState(L.icon({
     iconUrl: 'marker-a.png',
     iconSize: [30, 46],
     iconAnchor: [15, 44],
-  });
+  }));
 
-  const unloadingIcon = L.icon({
+  const [unloadingIcon] = useState(L.icon({
     iconUrl: 'marker-b.png',
     iconSize: [30, 46],
     iconAnchor: [15, 44],
-  });
+  }));
 
   return (
     <MapContainer

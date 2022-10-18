@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Table } from 'antd';
 import { LatLngExpression } from 'leaflet';
@@ -21,20 +21,21 @@ export default function RoutesTable({routes, points}: RoutesRequestState) {
     dispatch(getRoutesRequestAction());
   }, []);
 
-  const onSelectLoadingPointChange = (route: RouteRequest, newPoint: LatLngExpression) => {
+  const onSelectLoadingPointChange = useCallback((route: RouteRequest, newPoint: LatLngExpression) => {
     const newRoute = {...route};
 
     newRoute.loadingPoint = newPoint;
     dispatch(updateRouteRequestAction(newRoute));
-  }
-  const onSelectUnloadingPointChange = (route: RouteRequest, newPoint: LatLngExpression) => {
+  }, []);
+
+  const onSelectUnloadingPointChange = useCallback((route: RouteRequest, newPoint: LatLngExpression) => {
     const newRoute = {...route};
 
     newRoute.unloadingPoint = newPoint;
     dispatch(updateRouteRequestAction(newRoute));
-  }
+  }, []);
 
-  const columns = [
+  const columns = useMemo(() => [
     {
       title: 'Name',
       dataIndex: 'title',
@@ -56,14 +57,14 @@ export default function RoutesTable({routes, points}: RoutesRequestState) {
                      points={points}
                      onChange={(newPoint) => onSelectUnloadingPointChange(route, newPoint)}/>
     },
-  ];
+  ], [points]);
 
-  const onRowClick = (record: RouteRequest) => ({
+  const onRowClick = useCallback((record: RouteRequest) => ({
     'onClick'() {
       setCurrentRoute(record);
       dispatch(setCurrentRouteAction(record));
     }
-  });
+  }), []);
 
   const selectedRowClass = (record: RouteRequest) => (
     currentRoute?.id === record.id ? 'selected-row' : ''
